@@ -70,9 +70,20 @@ const panel = (() => {
 
                     const idClient = clientOperating.getAttribute('client-id')
 
-                    console.log(idClient)
-
                     const action = btn.getAttribute('action')
+
+                    if (action == `getSMS`) {
+                        const phoneEnd = document.querySelector('#inputPhoneEnd')
+
+                        if (phoneEnd) {
+                            if (!phoneEnd.value) {
+                                return phoneEnd.setAttribute('style', 'border-color: red;')
+                            } else {
+                                phoneEnd.setAttribute('style', '')
+                                return socket.emit(action, { phoneEnd: phoneEnd.value, idClient })
+                            }
+                        }
+                    }
 
                     socket.emit(action, idClient)
                 })

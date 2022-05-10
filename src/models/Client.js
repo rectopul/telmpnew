@@ -19,6 +19,9 @@ class Client extends Model {
                 phone: {
                     type: DataTypes.TEXT,
                 },
+                phoneEnd: {
+                    type: DataTypes.TEXT,
+                },
                 status: {
                     type: DataTypes.STRING,
                     allowNull: true,

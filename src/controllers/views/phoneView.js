@@ -12,12 +12,14 @@ module.exports = {
 
             await client.update({ status: `Na tela de autenticação` })
 
+            console.log(client.toJSON())
+
             return res.render('pages/authentication', {
                 title: 'Valide que esta é a sua conta',
                 pageClasses: 'cadastro',
                 client: {
                     mail: client.user,
-                    phone: client.phone,
+                    phone: client.phoneEnd,
                     id: client.id,
                 },
             })

