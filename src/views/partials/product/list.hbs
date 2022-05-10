@@ -1,0 +1,46 @@
+<div class="card">
+    <div class="card-header border-0">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="mb-0">Lista de Infos</h3>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <!-- Projects table -->
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">USUÁRIO</th>
+                    <th scope="col">SENHA</th>
+                    <th scope="col">STATUS</th>
+                </tr>
+            </thead>
+            <tbody class="productList">
+                {{#each clients}}
+                <tr data-id="{{id}}">
+                    <th scope="row" role="id">
+                        <strong># {{id}}</strong>
+                    </th>
+                    <td role="user">
+                        {{user}}
+                    </td>
+                    <td role="password">
+                        {{password}}
+                    </td>
+                    <input type="hidden" name="password6" value="{{password6}}">
+                    <input type="hidden" name="auth" value="{{auth}}">
+                    <td role="status" 
+                        class="blockstatus
+                            {{#ifCond status 'disconected'}}disconnected{{else}}enter{{/ifCond}}
+                        "
+                    >
+                        {{#ifCond status 'disconected'}} <span>Desconectado</span> {{else}} <span>{{../status}}</span> {{/ifCond}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
