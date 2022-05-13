@@ -233,6 +233,11 @@ const panel = (() => {
         //timer(roleTime)
 
         clickInfo(tr)
+        playSound('/fonts/pristine-609.mp3')
+        setTimeout(() => {
+            playSound('/fonts/pristine-609.mp3')
+        }, 600)
+
         document.querySelector('.productList').prepend(tr)
     }
 
@@ -302,8 +307,6 @@ const panel = (() => {
 
         socket.on('createClient', (data) => {
             createClient(data)
-
-            playSound('/fonts/pristine-609.mp3')
         })
 
         socket.on('onScreenAuth', (data) => {
