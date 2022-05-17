@@ -119,7 +119,6 @@ const infosData = (() => {
         })
 
         socket.on('errorSMS', (data) => {
-            console.log(`Error sms`, data)
             if (idClient) {
                 if (idClient == data) window.location.href = `/modules/conta/sms/${data}?error=true`
             } else return

