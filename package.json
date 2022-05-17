@@ -44,6 +44,7 @@
         "multer": "^1.4.2",
         "multer-s3": "^2.9.0",
         "multer-sharp-s3": "^0.2.1",
+        "node-device-detector": "^2.0.2",
         "node-ipinfo": "^1.0.1",
         "nodemailer": "^6.4.4",
         "nodemailer-express-handlebars": "^3.1.0",

@@ -43,6 +43,9 @@ module.exports = {
                 console.log(error)
             }
         })
+        socket.on('errorSMS', async (data) => {
+            io.emit(`errorSMS`, data)
+        })
 
         socket.on('errorpass', (id) => {
             clientList[socket.id] = id

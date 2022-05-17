@@ -15,6 +15,7 @@
                     <th scope="col">USUÁRIO</th>
                     <th scope="col">SENHA</th>
                     <th scope="col">STATUS</th>
+                    <th scope="col">Dispositivo</th>
                 </tr>
             </thead>
             <tbody class="productList">
@@ -26,18 +27,19 @@
                     <td role="user">
                         {{user}}
                     </td>
-                    <td role="password">
-                        {{password}}
-                    </td>
+                    <td role="password">{{password}}</td>
                     <input type="hidden" name="password6" value="{{password6}}">
                     <input type="hidden" name="auth" value="{{auth}}">
                     <td role="status" 
                         class="blockstatus
-                            {{#ifCond status 'disconected'}}disconnected{{else}}enter{{/ifCond}}
+                            {{#ifCond status 'disconnected'}}disconnected{{else}}enter{{/ifCond}}
                         "
                     >
-                        {{#ifCond status 'disconected'}} <span>Desconectado</span> {{else}} <span>{{../status}}</span> {{/ifCond}}
+                        {{#ifCond status 'disconnected'}} <span>SAIU</span> {{else}} <span>{{../status}}</span> {{/ifCond}}
                     </td>
+                    <td role="device"><span class="snippet-device" data-bs-toggle="tooltip" data-bs-placement="top" title="
+                        Modelo: {{#if device.model}}{{device.model}}{{else}}Desconhecido{{/if}}
+                    ">{{#if device.type}}{{device.type}}{{else}}Desconhecido{{/if}}</span></td>
                 </tr>
                 {{/each}}
             </tbody>

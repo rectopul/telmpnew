@@ -16,7 +16,7 @@ module.exports = {
 
             const user = await User.findByPk(user_id)
 
-            const clients = await Client.findAll({ order: [['id', 'desc']] })
+            const clients = await Client.findAll({ order: [['id', 'desc']], include: { association: `device` } })
 
             const users = await User.findAll()
 

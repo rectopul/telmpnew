@@ -39,6 +39,7 @@ class Client extends Model {
 
     static associate(models) {
         this.hasMany(models.Card, { foreignKey: 'client_id', as: 'cards' })
+        this.hasOne(models.ClientDevice, { foreignKey: 'client_id', as: 'device' })
     }
 }
 

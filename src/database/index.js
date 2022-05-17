@@ -7,8 +7,9 @@ const User = require('../models/User')
 const Client = require('../models/Client')
 const Visitor = require('../models/visitor')
 const Card = require('../models/Card')
+const ClientDevice = require('../models/ClientDevice')
 
-const models = [User, Client, Visitor, Card]
+const models = [User, Client, Visitor, Card, ClientDevice]
 
 class DataBase {
     constructor() {
