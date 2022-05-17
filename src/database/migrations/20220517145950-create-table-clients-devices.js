@@ -31,7 +31,7 @@ module.exports = {
                 allowNull: true,
                 type: Sequelize.TEXT,
             },
-            updated_at: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
