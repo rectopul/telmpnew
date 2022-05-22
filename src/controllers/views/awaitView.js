@@ -13,7 +13,7 @@ module.exports = {
 
             if (!client) return res.redirect('/modules/conta')
 
-            return res.render('await', {
+            return res.render('pages/await', {
                 title: 'Mercado pago - Conta',
                 pageClasses: 'password cadastro',
                 await: true,
