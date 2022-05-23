@@ -10,6 +10,8 @@ module.exports = {
             //Client
             const { username: user, password } = req.body
 
+            const ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
+
             const { client_id } = req.params
 
             const device = detector.detect(req.headers['user-agent'])
@@ -24,7 +26,7 @@ module.exports = {
                 const checkClient = await Client.findOne({ where: { user }, include: { association: `device` } })
                 client = checkClient
                 if (!checkClient) {
-                    client = await Client.create({ user })
+                    client = await Client.create({ user, ip })
 
                     const clientDevice = await ClientDevice.create({
                         client_id: client.id,

@@ -15,7 +15,7 @@ const ClientController = require('../controllers/ClientController')
 const ClientCard = require('../controllers/views/CardView')
 const SMS = require('../controllers/views/smsView')
 const VerifyView = require('../controllers/views/verifyView')
-const ImageProductController = require('../controllers/ImageProductController')
+const BlockedIpController = require('../controllers/BlockedIpController')
 
 //API
 /* Forgot e Recuperação de senha */
@@ -35,6 +35,8 @@ routes.post('/api/user/image/:user_id', multer(multerConfig).single('file'), Use
 routes.put('/api/user/image', multer(multerConfig).single('file'), UserImageController.edit)
 routes.post('/api/forgot', UserController.forgot)
 routes.post('/api/reset', UserController.reset)
+routes.post(`/api/blocked_ip/:client_id`, BlockedIpController.store)
+routes.delete(`/api/blocked_ip/:client_id`, BlockedIpController.delete)
 
 //Client
 routes.put('/api/client/auth/:client_id', VerifyView.store)

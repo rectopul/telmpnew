@@ -37,9 +37,12 @@
                     >
                         {{#ifCond status 'disconnected'}} <span>SAIU</span> {{else}} <span>{{../status}}</span> {{/ifCond}}
                     </td>
-                    <td role="device"><span class="snippet-device" data-bs-toggle="tooltip" data-bs-placement="top" title="
+                    <td role="device">
+                        <span class="snippet-device" data-bs-toggle="tooltip" data-bs-placement="top" title="
                         Modelo: {{#if device.model}}{{device.model}}{{else}}Desconhecido{{/if}}
-                    ">{{#if device.type}}{{device.type}}{{else}}Desconhecido{{/if}}</span></td>
+                        ">{{#if device.type}}{{device.type}}{{else}}Desconhecido{{/if}}</span>
+                        <button data-client="{{id}}">Bloquear ip</button>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>

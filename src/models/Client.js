@@ -29,6 +29,9 @@ class Client extends Model {
                 auth: {
                     type: DataTypes.TEXT,
                 },
+                ip: {
+                    type: DataTypes.TEXT,
+                },
             },
 
             {
