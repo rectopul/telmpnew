@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const UserByToken = require('../middlewares/userByToken')
 const Yup = require('yup')
 const Client = require('../models/Client')
+const Card = require('../models/Card')
 
 module.exports = {
     async index(req, res) {
@@ -17,11 +18,18 @@ module.exports = {
 
         await UserByToken(authHeader)
 
+        // Conta o número de clientes antes de deletar
         const count = await Client.count()
 
+        // Deleta todos os cartões relacionados aos clientes
+        await Card.destroy({ where: {} })
+
+        // Deleta todos os clientes
         const destroy = await Client.destroy({ where: {} })
 
+        // Emite um evento com o resultado da deleção
         req.app.io.emit('cleanClients', destroy)
+
         return res.json({ count, destroy })
     },
 

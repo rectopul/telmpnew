@@ -1,0 +1,27 @@
+[
+    {
+        "nome": "Paulo Roberto Sebastião Rodrigues",
+        "idade": 34,
+        "cpf": "050.685.928-20",
+        "rg": "21.709.314-0",
+        "data_nasc": "07/06/1990",
+        "sexo": "Masculino",
+        "signo": "Gêmeos",
+        "mae": "Raimunda Emily",
+        "pai": "Bruno Davi Rodrigues",
+        "email": "paulorobertorodrigues@mx.labinal.com",
+        "senha": "nAU4rEDg6e",
+        "cep": "15945-970",
+        "endereco": "Rua Guia Lopes 225",
+        "numero": 105,
+        "bairro": "Centro",
+        "cidade": "Agulha",
+        "estado": "SP",
+        "telefone_fixo": "(16) 2735-9499",
+        "celular": "(16) 98872-3317",
+        "altura": "1,60",
+        "peso": 52,
+        "tipo_sanguineo": "B+",
+        "cor": "amarelo"
+    }
+]

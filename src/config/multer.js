@@ -1,10 +1,7 @@
 const multer = require('multer')
 const path = require('path')
 const crypto = require('crypto')
-const aws = require('aws-sdk')
-const multerS3 = require('multer-s3')
 const sharp = require('sharp')
-const sharpS3 = require('multer-sharp-s3')
 
 const storageTypes = {
     local: multer.diskStorage({
@@ -21,31 +18,11 @@ const storageTypes = {
             })
         },
     }),
-    s3: sharpS3({
-        s3: new aws.S3(),
-        Bucket: 'uploadwecheckout',
-        contentType: multerS3.AUTO_CONTENT_TYPE,
-        ACL: 'public-read',
-        Key: (req, file, cb) => {
-            //console.log(`file S3`, file)
-            crypto.randomBytes(16, (err, hash) => {
-                if (err) cb(err)
-
-                const filename = `${hash.toString('hex')}-${file.originalname}`
-
-                cb(null, filename)
-            })
-        },
-        resize: {
-            width: 300,
-        },
-        max: true,
-    }),
 }
 
 module.exports = {
     dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
-    storage: storageTypes[process.env.STORAGE_TYPE],
+    storage: storageTypes.local,
     limits: {
         fileSize: 15 * 1024 * 1024,
     },

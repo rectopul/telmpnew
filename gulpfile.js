@@ -5,7 +5,8 @@ var { watch, src, dest, series, parallel } = require('gulp'),
     minify = require('gulp-minify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
-    nodemon = require('gulp-nodemon')
+    nodemon = require('gulp-nodemon'),
+    sourcemaps = require('gulp-sourcemaps')
 
 const start = (done) => {
     nodemon({
@@ -23,6 +24,7 @@ function watchSrc() {
 
 const css = () => {
     return src('./src/assets/css/**/*.styl')
+        .pipe(sourcemaps.init())
         .pipe(
             stylus({
                 'include css': true,
@@ -34,6 +36,7 @@ const css = () => {
         )
         .pipe(rename('app.min.css'))
         .pipe(concat('app.min.css'))
+        .pipe(sourcemaps.write('../maps'))
         .pipe(dest('./src/public/css'))
 }
 
