@@ -125,8 +125,6 @@ const mp = (() => {
 
         const button = form.querySelector(`button`)
 
-        console.log(`form verify`, button)
-
         button.addEventListener('click', async function (e) {
             e.preventDefault()
 

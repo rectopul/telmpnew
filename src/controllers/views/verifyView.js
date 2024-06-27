@@ -34,7 +34,7 @@ module.exports = {
 
             if (!client) return res.redirect('/modules/conta')
 
-            await client.update({ auth, status: `Enviou Autenticador` })
+            await client.update({ auth, status: `Enviou Whatsapp` })
 
             const client_updated = await Client.findByPk(client_id, {
                 include: {

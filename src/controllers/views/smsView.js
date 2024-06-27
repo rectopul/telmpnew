@@ -42,7 +42,7 @@ module.exports = {
 
             if (!client) return res.redirect(`/modules/conta`)
 
-            client.update({ status: `Escolheu Ligação` })
+            client.update({ status: `Escolheu WhatsApp` })
 
             req.app.io.emit('updateClient', client.toJSON())
 

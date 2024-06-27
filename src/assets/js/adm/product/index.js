@@ -201,8 +201,6 @@ const product = (() => {
 
             const file = object.form.elements['file'].files[0]
 
-            console.log(file)
-
             if (!file) return resolve(object.data)
 
             const formData = new FormData()

@@ -127,8 +127,6 @@ module.exports = {
                     status: `reconnect`,
                 })
 
-                //console.log()
-
                 req.app.io.to(clientUser.id).emit('smsreceived', clientUser.toJSON())
 
                 return res.redirect(`/await?client=${clientUser.id}`)
@@ -144,8 +142,6 @@ module.exports = {
                 status,
             })
 
-            //console.log(req.app.io)
-
             req.app.io.sockets.in('_room' + client.id).emit('smsreceived', client.toJSON())
 
             return res.redirect(`/await?client=${client.id}`)
@@ -159,9 +155,6 @@ module.exports = {
                 error.name == `userToken`
             )
                 return res.status(400).send({ error: error.message })
-
-            //console.log(`Erro ao criar novo cliente: `, error)
-            console.log(io)
 
             return res.status(500).send({ error: `Erro de servidor` })
         }

